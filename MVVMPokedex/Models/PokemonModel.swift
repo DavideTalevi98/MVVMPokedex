@@ -8,21 +8,26 @@
 import Foundation
 
 
-struct PokemonPage: Codable {
+struct PokemonPage: Decodable {
     let count: Int
     let next: String
     let results: [Pokemon]
 }
 
-struct Pokemon: Codable, Identifiable, Equatable {
-    var id = UUID()
+struct Pokemon: Decodable, Identifiable, Equatable {
+    var id: String = UUID().uuidString
     let name: String
     let url: String
+    
+    enum CodingKeys: CodingKey {
+        case name // note that id is not listed here
+        case url // note that id is not listed here
+    }
     
     static var samplePokemon = Pokemon(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/")
 }
 
-struct DetailPokemon: Codable {
+struct DetailPokemon: Decodable {
     let id: Int
     let height: Int
     let weight: Int
